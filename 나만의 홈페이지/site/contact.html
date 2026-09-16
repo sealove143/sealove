@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>섭외 문의 | 김승주 항해록</title>
+<meta name="description" content="김승주 선장 강연·방송 섭외 문의 — 연락처는 페이지에 공개되지 않습니다">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB4PSc1MCcgeT0nNzInIGZvbnQtc2l6ZT0nNzInIHRleHQtYW5jaG9yPSdtaWRkbGUnPiYjOTg3NTs8L3RleHQ+PC9zdmc+">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="contact">
+<div id="site-header"></div>
+
+<main>
+  <section class="section" style="padding-top:56px;">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">CHARTER REQUEST</div>
+        <h2 class="section-title">강연 · 방송 섭외 문의</h2>
+        <p class="section-sub">목적과 희망 날짜를 남겨주시면 검토 후 회신드립니다. 연락처는 페이지에 공개되지 않습니다.</p>
+      </div>
+      <div class="contact-grid">
+        <form class="contact-form" id="contactForm">
+          <div class="field-row">
+            <div>
+              <label for="cType">문의 종류</label>
+              <select id="cType">
+                <option>강연</option>
+                <option>방송 출연</option>
+                <option>인터뷰</option>
+                <option>기타</option>
+              </select>
+            </div>
+            <div>
+              <label for="cDate">희망 날짜</label>
+              <input type="date" id="cDate">
+            </div>
+          </div>
+          <div style="margin-bottom:14px;">
+            <label for="cDetail">문의 내용</label>
+            <textarea id="cDetail" placeholder="행사 취지, 대상, 장소, 예산 등을 알려주세요" required></textarea>
+          </div>
+          <div style="margin-bottom:14px;">
+            <label for="cReply">회신받을 연락처 (이메일 또는 전화)</label>
+            <input type="text" id="cReply" placeholder="example@email.com" required>
+          </div>
+          <button class="btn btn-primary" type="submit">메일로 보내기</button>
+          <div class="fallback" id="fallbackBox" hidden>
+            <div>메일 앱이 자동으로 열리지 않으면, 아래 내용을 복사해 직접 보내주세요.</div>
+            <textarea id="fallbackText" readonly></textarea>
+            <div class="fallback-actions">
+              <button type="button" class="btn btn-ghost" id="copyFallback">문의 내용 복사</button>
+            </div>
+          </div>
+        </form>
+        <div class="contact-side">
+          <h3>섭외 전 확인해 주세요</h3>
+          <ul>
+            <li>강연은 청소년·청년 대상 해양산업 진로 강연을 중심으로 진행합니다.</li>
+            <li>방송·인터뷰는 일정 확인 후 개별 회신드립니다.</li>
+            <li>승선 일정에 따라 회신이 다소 지연될 수 있습니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section sea-texture">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">FAQ</div>
+        <h2 class="section-title">자주 묻는 질문</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>어떤 주제로 강연이 가능한가요?</summary>
+          <p>청소년·청년 대상 해양산업 진로 강연을 중심으로 진행합니다.</p>
+        </details>
+        <details class="faq-item">
+          <summary>온라인(줌) 강연도 가능한가요?</summary>
+          <p>네, 오프라인 강연 외에 줌 특강 형태로도 다수 진행해왔습니다.</p>
+        </details>
+        <details class="faq-item">
+          <summary>방송·인터뷰 문의도 받으시나요?</summary>
+          <p>네, 방송·인터뷰는 일정 확인 후 개별로 회신드립니다.</p>
+        </details>
+        <details class="faq-item">
+          <summary>회신은 얼마나 걸리나요?</summary>
+          <p>승선 일정에 따라 회신이 다소 지연될 수 있습니다. 6개월 승선 / 1개월 휴가 주기로 근무하고 있어 휴가 기간에 확인이 더 원활합니다.</p>
+        </details>
+        <details class="faq-item">
+          <summary>연락처를 바로 알 수 있나요?</summary>
+          <p>페이지에는 연락처를 공개하지 않습니다. 문의 폼을 제출하시면 남겨주신 연락처로만 회신드립니다.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script src="js/script.js"></script>
+</body>
+</html>
