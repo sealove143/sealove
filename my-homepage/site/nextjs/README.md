@@ -56,10 +56,9 @@ npm start
 
 ## 배포
 
-Vercel에 `site/nextjs`를 프로젝트 루트로 지정해 배포하고, 프로젝트 환경변수에
+Vercel에 `my-homepage/site/nextjs`를 프로젝트 루트(Root Directory)로 지정해 배포하고, 프로젝트 환경변수에
 `ANTHROPIC_API_KEY`·`RESEND_API_KEY`(필수)와 필요 시 `ANTHROPIC_MODEL`, `NEXT_PUBLIC_SITE_URL`을 등록하세요.
 
-`npm run build`는 Turbopack 대신 Webpack(`next build --webpack`)을 쓴다. Vercel은 저장소 루트를
-추적 기준으로 삼아 `나만의 홈페이지/…` 같은 한글 경로가 산출물 이름에 들어가는데, Next.js 16.3의
-Turbopack이 이 경로를 바이트 단위로 자르다 패닉(`is not a char boundary`)을 일으키기 때문이다.
-폴더 이름을 영문으로 바꾸거나 Turbopack 버그가 고쳐지면 `--webpack`을 빼도 된다.
+이 경로에는 한글이나 공백을 넣지 마세요. Vercel은 저장소 루트 기준 경로로 서버 함수 이름을 만드는데
+공백이 있으면 배포를 거부하고("Serverless Function has an invalid name"), 한글이 있으면 Next.js 16.3의
+Turbopack 빌드가 패닉("is not a char boundary")을 일으킵니다.
