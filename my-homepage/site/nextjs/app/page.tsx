@@ -13,7 +13,7 @@ const COURSES = [
     body: "항해사는 어떤 일을 하고, 어떻게 선장이 될까요? 해양대 지망생과 진로를 고민하는 분들을 위해 실제 경력을 바탕으로 한 상담과 11년의 항해 일지를 준비했습니다.",
     main: { href: "/mentor", label: "항해 상담실로" },
     subs: [
-      { href: "/career", label: "항해 일지" },
+      { href: "/about#log", label: "항해 일지" },
       { href: "/books", label: "진로서 『해운 무역의 리더 항해사』" },
     ],
     icon: (
@@ -32,7 +32,7 @@ const COURSES = [
     body: "강연, 방송, 인터뷰 섭외를 기다립니다. 유 퀴즈 온 더 블럭, KBS 아침마당, CBS 세바시에서 전한 바다 이야기를 여러분의 무대에서도 나눕니다.",
     main: { href: "/contact", label: "섭외 문의하기" },
     subs: [
-      { href: "/media", label: "방송·출연 이력" },
+      { href: "/books#media", label: "방송·출연 이력" },
       { href: "/books", label: "저서 3권" },
       { href: "/about", label: "프로필" },
     ],

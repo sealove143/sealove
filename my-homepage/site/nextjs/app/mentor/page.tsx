@@ -50,7 +50,7 @@ export default function MentorPage() {
               <summary>선장이 되기까지 얼마나 걸렸나요?</summary>
               <p>
                 2016년 삼등항해사로 시작해 2025년 4월 선장이 되기까지 10년이 걸렸습니다. 계급별 승선 기록은{" "}
-                <Link href="/career" style={{ color: "var(--sea-bright)" }}>
+                <Link href="/about#log" style={{ color: "var(--sea-bright)" }}>
                   항해 일지
                 </Link>
                 에서 볼 수 있습니다.

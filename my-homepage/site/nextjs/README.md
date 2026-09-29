@@ -29,10 +29,8 @@ http://localhost:3000 에서 확인할 수 있습니다.
 | 경로 | 설명 |
 |---|---|
 | `/` | 홈 (히어로, 대시보드 카드) |
-| `/about` | 프로필 |
-| `/career` | 항해 일지 |
-| `/books` | 저서 |
-| `/media` | 미디어·채널 |
+| `/about` | 프로필·항해 일지 (선교 시점 항해 영상 워터마크, `/career`는 `/about#log`로 리다이렉트) |
+| `/books` | 저서·미디어 (책 표지, 방송·강연, 채널. `/media`는 `/books#media`로 리다이렉트) |
 | `/mentor` | 항해 상담실 (AI 챗봇, `app/api/mentor` 서버 연동) |
 | `/contact` | 섭외 문의 (Resend 메일 발송, `app/api/contact` 서버 연동) |
 

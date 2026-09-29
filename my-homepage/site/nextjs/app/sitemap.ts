@@ -4,7 +4,7 @@ import type { MetadataRoute } from "next";
 // sitemap이 그 값을 사용하도록 되어 있다 (.env.local.example 참고).
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
-const ROUTES = ["", "/about", "/career", "/books", "/media", "/mentor", "/contact"];
+const ROUTES = ["", "/about", "/books", "/mentor", "/contact"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
