@@ -98,6 +98,11 @@ export default async function QuestionPage({ params }: PageProps<"/mentor/[id]">
             <div className="eyebrow">ADMIN</div>
             {question.adminOnly && (
               <p className="board-note">
+                {question.adminOnly.name && (
+                  <>
+                    성명 <b>{question.adminOnly.name}</b> ·{" "}
+                  </>
+                )}
                 성별 <b>{GENDERS[question.adminOnly.gender]}</b> · 질문자 이메일{" "}
                 <a href={`mailto:${question.adminOnly.email}`} style={{ color: "var(--sea-bright)" }}>
                   {question.adminOnly.email}

@@ -5,6 +5,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
 import { cache } from "react";
 
+import type { Gender } from "@/lib/consult";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
 const SESSION_COOKIE = "consult_session";
@@ -15,6 +16,9 @@ export interface Viewer {
   email: string;
   nickname: string;
   isAdmin: boolean;
+  /** 가입 때 적은 성명·성별. 본인과 선장에게만 쓰인다. 예전에 가입한 계정은 비어 있을 수 있다. */
+  name: string | null;
+  gender: Gender | null;
 }
 
 // DB에는 토큰의 해시만 둔다. 쿠키의 원문 토큰은 서버 어디에도 저장하지 않는다.
@@ -62,16 +66,16 @@ export const getViewer = cache(async (): Promise<Viewer | null> => {
 
   const { data } = await supabaseAdmin
     .from("sessions")
-    .select("expires_at, users(id, email, nickname, role)")
+    .select("expires_at, users(id, email, nickname, role, name, gender)")
     .eq("token_hash", hashToken(token))
     .maybeSingle();
   const session = data as unknown as {
     expires_at: string;
-    users: { id: string; email: string; nickname: string; role: "user" | "admin" } | null;
+    users: { id: string; email: string; nickname: string; role: "user" | "admin"; name: string | null; gender: Gender | null } | null;
   } | null;
 
   if (!session?.users || new Date(session.expires_at) <= new Date()) return null;
 
-  const { id, email, nickname, role } = session.users;
-  return { id, email, nickname, isAdmin: role === "admin" };
+  const { id, email, nickname, role, name, gender } = session.users;
+  return { id, email, nickname, isAdmin: role === "admin", name, gender };
 });

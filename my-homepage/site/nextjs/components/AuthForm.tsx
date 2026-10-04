@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 
 import { signIn, signUp, type AuthState } from "@/app/mentor/authActions";
-import { PASSWORD_MAX, PASSWORD_MIN } from "@/lib/consult";
+import { GENDERS, NAME_MAX, NAME_MIN, PASSWORD_MAX, PASSWORD_MIN } from "@/lib/consult";
 
 type Mode = "signin" | "signup";
 
@@ -13,6 +13,8 @@ export default function AuthForm() {
   const [signUpState, signUpAction, signUpPending] = useActionState<AuthState, FormData>(signUp, {});
   // React는 액션이 끝나면 폼을 비운다. 실패했을 때 이메일을 다시 치지 않도록 값을 직접 들고 있는다.
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
 
   const isSignUp = mode === "signup";
   const state = isSignUp ? signUpState : signInState;
@@ -21,7 +23,8 @@ export default function AuthForm() {
   return (
     <form className="board-form auth-form" action={isSignUp ? signUpAction : signInAction}>
       <p className="board-note">
-        질문을 남기려면 먼저 로그인해 주세요. 처음이라면 이메일과 비밀번호만 정하면 바로 가입됩니다.
+        질문을 남기려면 먼저 로그인해 주세요. 처음이라면 회원가입에서 성명·성별·이메일·비밀번호를 적으면 바로
+        가입됩니다.
       </p>
       <div className="auth-tabs" role="tablist" aria-label="로그인 또는 회원가입">
         <button type="button" role="tab" aria-selected={!isSignUp} onClick={() => setMode("signin")}>
@@ -31,6 +34,40 @@ export default function AuthForm() {
           회원가입
         </button>
       </div>
+      {isSignUp && (
+        <div className="field-row">
+          <div>
+            <label htmlFor="authName">성명</label>
+            <input
+              type="text"
+              id="authName"
+              name="name"
+              required
+              minLength={NAME_MIN}
+              maxLength={NAME_MAX}
+              autoComplete="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <fieldset className="visibility-field">
+            <legend>성별</legend>
+            {Object.entries(GENDERS).map(([key, label]) => (
+              <label key={key} className="radio">
+                <input
+                  type="radio"
+                  name="gender"
+                  value={key}
+                  required
+                  checked={gender === key}
+                  onChange={() => setGender(key)}
+                />
+                {label}
+              </label>
+            ))}
+          </fieldset>
+        </div>
+      )}
       <div style={{ marginBottom: 14 }}>
         <label htmlFor="authEmail">이메일</label>
         <input
@@ -78,7 +115,7 @@ export default function AuthForm() {
       </div>
       <p className="board-note">
         {isSignUp
-          ? `비밀번호는 ${PASSWORD_MIN}자 이상으로 정해 주세요. 답장이 이 이메일로 갈 수 있으니 주소를 정확히 적어 주세요. 이메일은 게시판에 공개되지 않습니다.`
+          ? `비밀번호는 ${PASSWORD_MIN}자 이상으로 정해 주세요. 답장이 이 이메일로 갈 수 있으니 주소를 정확히 적어 주세요. 성명·성별·이메일은 선장님에게만 보이고 게시판에는 공개되지 않습니다.`
           : "비밀번호를 잊으셨다면 섭외 문의 페이지로 알려 주세요."}
       </p>
       <button className="btn btn-primary" type="submit" disabled={pending}>

@@ -24,6 +24,8 @@ export const TITLE_MAX = 100;
 export const BODY_MIN = 10;
 export const BODY_MAX = 5000;
 export const PAGE_SIZE = 15;
+export const NAME_MIN = 2;
+export const NAME_MAX = 30;
 export const PASSWORD_MIN = 8;
 export const PASSWORD_MAX = 72;
 
@@ -61,7 +63,7 @@ export interface QuestionDetail {
   is_mine: boolean;
   answer: { body: string; created_at: string; updated_at: string } | null;
   /** 선장(관리자)이 볼 때만 채워진다. 다른 사람에게는 서버가 아예 내려보내지 않는다. */
-  adminOnly: { gender: Gender; email: string } | null;
+  adminOnly: { gender: Gender; email: string; name: string | null } | null;
 }
 
 export function formatDate(iso: string) {

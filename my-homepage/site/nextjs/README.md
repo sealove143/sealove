@@ -41,14 +41,15 @@ http://localhost:3000 에서 확인할 수 있습니다.
 구현 계획과 설계 배경은 [`docs/consult-board-plan.md`](docs/consult-board-plan.md)에 있습니다.
 
 - **DB**: Supabase(Postgres). 스키마는 [`supabase/migrations/`](supabase/migrations/)에 있고,
-  Supabase SQL Editor에서 한 번 실행하면 됩니다. RLS와 Supabase Auth는 쓰지 않습니다.
+  파일 이름 순서대로 Supabase SQL Editor에서 한 번씩 실행하면 됩니다. RLS와 Supabase Auth는 쓰지 않습니다.
 - **서버에서만 접근**: `lib/supabase/admin.ts`가 secret 키로 접속하고, 게시판의 모든 조회·쓰기는
   `lib/consultDb.ts`를 거칩니다. 비공개 글 차단, 남의 비공개 글 제목 가림, 성별·이메일을 관리자에게만
   내려보내는 규칙이 이 파일에 있습니다. 공개(anon) 키로는 아무것도 못 하도록 SQL에서 권한을 회수합니다.
 - **로그인**: 이메일·비밀번호(`app/mentor/authActions.ts`). 비밀번호는 scrypt 해시로 `users`에,
   로그인 상태는 토큰 해시로 `sessions`에 저장하고 브라우저에는 httpOnly 쿠키만 둡니다.
   비밀번호를 5번 틀리면 15분 잠깁니다. 게시판에는 자동 생성 닉네임(`선원123456`)만 보입니다.
-- **질문 작성**: 궁금증 한마디(제목)·성별(필수)·분류·공개 설정·내용. 성별은 관리자에게만 보입니다.
+- **회원가입**: 성명·성별·이메일·비밀번호. 성명·성별·이메일은 관리자에게만 보입니다.
+- **질문 작성**: 궁금증 한마디(제목)·성별(필수, 가입 때 값이 미리 선택됨)·분류·공개 설정·내용.
 - **알림 메일**: 질문이 올라오면 `CONTACT_TO_EMAIL`로 메일이 갑니다. 메일 제목은 궁금증 한마디이고,
   답장 주소가 질문자 이메일이라 메일 앱에서 바로 답장할 수 있습니다.
 - **DB 트리거**: 도배 제한(10분 3건·하루 10건), 차단 계정 글쓰기 금지, 신고 3건 시 자동 숨김,

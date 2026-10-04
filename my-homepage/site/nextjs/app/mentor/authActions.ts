@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { createSession, destroySession } from "@/lib/auth/session";
-import { PASSWORD_MAX, PASSWORD_MIN } from "@/lib/consult";
+import { isGender, NAME_MAX, NAME_MIN, PASSWORD_MAX, PASSWORD_MIN } from "@/lib/consult";
 import { checkRateLimit } from "@/lib/rateLimit";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 
@@ -48,6 +48,11 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   if (formData.get("website")) return {};
   if (await isRateLimited()) return { error: "시도가 너무 잦아요. 1분 뒤에 다시 시도해 주세요." };
 
+  const name = String(formData.get("name") ?? "").trim();
+  const gender = formData.get("gender");
+  if (name.length < NAME_MIN || name.length > NAME_MAX) return { error: `성명은 ${NAME_MIN}~${NAME_MAX}자로 입력해 주세요.` };
+  if (!isGender(gender)) return { error: "성별을 선택해 주세요." };
+
   const input = readCredentials(formData);
   if ("error" in input) return input;
 
@@ -57,7 +62,7 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const { data, error } = await supabaseAdmin
       .from("users")
-      .insert({ email: input.email, password_hash: passwordHash, nickname: randomNickname() })
+      .insert({ email: input.email, password_hash: passwordHash, nickname: randomNickname(), name, gender })
       .select("id")
       .single();
 

@@ -51,7 +51,7 @@ export default async function MentorPage({ searchParams }: PageProps<"/mentor">)
               {viewer ? (
                 <>
                   <BoardViewerBar viewer={viewer} />
-                  <QuestionForm nickname={viewer.nickname} email={viewer.email} />
+                  <QuestionForm nickname={viewer.nickname} email={viewer.email} defaultGender={viewer.gender} />
                 </>
               ) : (
                 <AuthForm />

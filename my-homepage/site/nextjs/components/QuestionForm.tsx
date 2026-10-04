@@ -3,22 +3,29 @@
 import { useActionState, useState } from "react";
 
 import { createQuestion, type ActionState } from "@/app/mentor/actions";
-import { BODY_MAX, BODY_MIN, CATEGORIES, GENDERS, TITLE_MAX } from "@/lib/consult";
+import { BODY_MAX, BODY_MIN, CATEGORIES, GENDERS, TITLE_MAX, type Gender } from "@/lib/consult";
 
-export default function QuestionForm({ nickname, email }: { nickname: string; email: string }) {
+interface Props {
+  nickname: string;
+  email: string;
+  /** 가입 때 고른 성별. 미리 골라 두되 질문마다 바꿀 수 있다. */
+  defaultGender: Gender | null;
+}
+
+export default function QuestionForm({ nickname, email, defaultGender }: Props) {
   // React는 액션이 끝나면 폼을 비운다. 실패했을 때 쓴 내용이 사라지지 않도록 값을 직접 들고 있는다.
   const [title, setTitle] = useState("");
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState<string>(defaultGender ?? "");
   const [category, setCategory] = useState("career");
   const [visibility, setVisibility] = useState("public");
   const [body, setBody] = useState("");
 
   const [state, formAction, pending] = useActionState<ActionState, FormData>(async (prev, formData) => {
     const result = await createQuestion(prev, formData);
-    // 올라간 뒤에는 다음 질문을 쓸 수 있게 비운다. 성별은 질문마다 다시 고른다.
+    // 올라간 뒤에는 다음 질문을 쓸 수 있게 비운다.
     if (result.ok) {
       setTitle("");
-      setGender("");
+      setGender(defaultGender ?? "");
       setVisibility("public");
       setBody("");
     }
