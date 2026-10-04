@@ -12,6 +12,7 @@ import { supabaseAdmin } from "@/lib/supabase/admin";
 export type AuthState = { error?: string };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_FAILED_LOGINS = 5;
 const LOCK_MINUTES = 15;
 
@@ -23,18 +24,27 @@ async function isRateLimited() {
   return !checkRateLimit(`auth:${ip}`).allowed;
 }
 
-// 로그인·가입 폼이 같은 입력란(이메일, 비밀번호, 비밀번호 확인)을 쓴다.
-function readCredentials(formData: FormData): { email: string; password: string } | { error: string } {
+// 비밀번호 확인란은 가입할 때만 받는다. 로그인은 저장된 해시와 비교하므로 필요 없다.
+function readCredentials(formData: FormData, confirm: boolean): { email: string; password: string } | { error: string } {
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = String(formData.get("password") ?? "");
-  const passwordConfirm = String(formData.get("passwordConfirm") ?? "");
 
   if (!EMAIL_PATTERN.test(email) || email.length > 254) return { error: "이메일 주소를 정확히 입력해 주세요." };
   if (password.length < PASSWORD_MIN || password.length > PASSWORD_MAX) {
     return { error: `비밀번호는 ${PASSWORD_MIN}~${PASSWORD_MAX}자로 입력해 주세요.` };
   }
-  if (password !== passwordConfirm) return { error: "비밀번호와 비밀번호 확인이 서로 달라요." };
+  if (confirm && password !== String(formData.get("passwordConfirm") ?? "")) {
+    return { error: "비밀번호와 비밀번호 확인이 서로 달라요." };
+  }
   return { email, password };
+}
+
+// 실제로 있는 날짜이고(2월 30일 같은 값 제외) 1900년부터 오늘 사이여야 한다.
+function isValidBirthDate(value: string) {
+  if (!DATE_PATTERN.test(value)) return false;
+  const date = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) return false;
+  return value >= "1900-01-01" && value <= new Date().toISOString().slice(0, 10);
 }
 
 // 이메일이 게시판에 드러나지 않도록 닉네임은 무작위로 만든다.
@@ -52,8 +62,10 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   const gender = formData.get("gender");
   if (name.length < NAME_MIN || name.length > NAME_MAX) return { error: `성명은 ${NAME_MIN}~${NAME_MAX}자로 입력해 주세요.` };
   if (!isGender(gender)) return { error: "성별을 선택해 주세요." };
+  const birthDate = String(formData.get("birthDate") ?? "");
+  if (!isValidBirthDate(birthDate)) return { error: "생년월일을 정확히 입력해 주세요." };
 
-  const input = readCredentials(formData);
+  const input = readCredentials(formData, true);
   if ("error" in input) return input;
 
   const passwordHash = await hashPassword(input.password);
@@ -62,7 +74,7 @@ export async function signUp(_prev: AuthState, formData: FormData): Promise<Auth
   for (let attempt = 0; attempt < 5; attempt += 1) {
     const { data, error } = await supabaseAdmin
       .from("users")
-      .insert({ email: input.email, password_hash: passwordHash, nickname: randomNickname(), name, gender })
+      .insert({ email: input.email, password_hash: passwordHash, nickname: randomNickname(), name, gender, birth_date: birthDate })
       .select("id")
       .single();
 
@@ -87,7 +99,7 @@ export async function signIn(_prev: AuthState, formData: FormData): Promise<Auth
   if (formData.get("website")) return {};
   if (await isRateLimited()) return { error: "시도가 너무 잦아요. 1분 뒤에 다시 시도해 주세요." };
 
-  const input = readCredentials(formData);
+  const input = readCredentials(formData, false);
   if ("error" in input) return input;
 
   const { data } = await supabaseAdmin

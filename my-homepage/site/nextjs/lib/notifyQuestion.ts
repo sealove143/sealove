@@ -31,8 +31,9 @@ export async function notifyNewQuestion(author: Viewer, question: NewQuestionMai
   });
 
   const name = author.name ?? "(미입력)";
+  const birthDate = author.birthDate ?? "(미입력)";
 
-  const text = `작성자: ${author.nickname} <${author.email}>\n성명: ${name}\n성별: ${gender}\n분류: ${category}\n공개 설정: ${visibility}\n접수 시각: ${receivedAt}\n\n${question.body}\n\n게시판에서 답변하기: ${link}\n(이 메일에 답장하면 질문자 이메일로 바로 갑니다.)`;
+  const text = `작성자: ${author.nickname} <${author.email}>\n성명: ${name}\n생년월일: ${birthDate}\n성별: ${gender}\n분류: ${category}\n공개 설정: ${visibility}\n접수 시각: ${receivedAt}\n\n${question.body}\n\n게시판에서 답변하기: ${link}\n(이 메일에 답장하면 질문자 이메일로 바로 갑니다.)`;
   const html = buildEmailHtml({
     eyebrow: "NAVIGATION CONSULTATION",
     heading: "항해 상담실에 새 질문이 올라왔습니다",
@@ -40,6 +41,7 @@ export async function notifyNewQuestion(author: Viewer, question: NewQuestionMai
     rows: [
       ["작성자", `${escapeHtml(author.nickname)} &lt;${escapeHtml(author.email)}&gt;`],
       ["성명", escapeHtml(name)],
+      ["생년월일", escapeHtml(birthDate)],
       ["성별", escapeHtml(gender)],
       ["분류", escapeHtml(category)],
       ["공개 설정", visibility],

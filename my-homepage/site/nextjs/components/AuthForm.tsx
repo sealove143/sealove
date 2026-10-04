@@ -15,6 +15,7 @@ export default function AuthForm() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
+  const [birthDate, setBirthDate] = useState("");
 
   const isSignUp = mode === "signup";
   const state = isSignUp ? signUpState : signInState;
@@ -23,8 +24,8 @@ export default function AuthForm() {
   return (
     <form className="board-form auth-form" action={isSignUp ? signUpAction : signInAction}>
       <p className="board-note">
-        질문을 남기려면 먼저 로그인해 주세요. 처음이라면 회원가입에서 성명·성별·이메일·비밀번호를 적으면 바로
-        가입됩니다.
+        질문을 남기려면 먼저 로그인해 주세요. 처음이라면 회원가입에서 성명·생년월일·성별·이메일·비밀번호를
+        적으면 바로 가입됩니다.
       </p>
       <div className="auth-tabs" role="tablist" aria-label="로그인 또는 회원가입">
         <button type="button" role="tab" aria-selected={!isSignUp} onClick={() => setMode("signin")}>
@@ -50,6 +51,23 @@ export default function AuthForm() {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
+          <div>
+            <label htmlFor="authBirthDate">생년월일</label>
+            <input
+              type="date"
+              id="authBirthDate"
+              name="birthDate"
+              required
+              min="1900-01-01"
+              autoComplete="bday"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+            />
+          </div>
+        </div>
+      )}
+      {isSignUp && (
+        <div style={{ marginBottom: 14 }}>
           <fieldset className="visibility-field">
             <legend>성별</legend>
             {Object.entries(GENDERS).map(([key, label]) => (
@@ -95,18 +113,20 @@ export default function AuthForm() {
             autoComplete={isSignUp ? "new-password" : "current-password"}
           />
         </div>
-        <div>
-          <label htmlFor="authPasswordConfirm">비밀번호 확인</label>
-          <input
-            type="password"
-            id="authPasswordConfirm"
-            name="passwordConfirm"
-            required
-            minLength={PASSWORD_MIN}
-            maxLength={PASSWORD_MAX}
-            autoComplete={isSignUp ? "new-password" : "current-password"}
-          />
-        </div>
+        {isSignUp && (
+          <div>
+            <label htmlFor="authPasswordConfirm">비밀번호 확인</label>
+            <input
+              type="password"
+              id="authPasswordConfirm"
+              name="passwordConfirm"
+              required
+              minLength={PASSWORD_MIN}
+              maxLength={PASSWORD_MAX}
+              autoComplete="new-password"
+            />
+          </div>
+        )}
       </div>
       {/* 봇 차단용 숨김 필드 — 사람에게는 보이지 않는다. */}
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
@@ -115,7 +135,7 @@ export default function AuthForm() {
       </div>
       <p className="board-note">
         {isSignUp
-          ? `비밀번호는 ${PASSWORD_MIN}자 이상으로 정해 주세요. 답장이 이 이메일로 갈 수 있으니 주소를 정확히 적어 주세요. 성명·성별·이메일은 선장님에게만 보이고 게시판에는 공개되지 않습니다.`
+          ? `비밀번호는 ${PASSWORD_MIN}자 이상으로 정해 주세요. 답장이 이 이메일로 갈 수 있으니 주소를 정확히 적어 주세요. 성명·생년월일·성별·이메일은 선장님에게만 보이고 게시판에는 공개되지 않습니다.`
           : "비밀번호를 잊으셨다면 섭외 문의 페이지로 알려 주세요."}
       </p>
       <button className="btn btn-primary" type="submit" disabled={pending}>

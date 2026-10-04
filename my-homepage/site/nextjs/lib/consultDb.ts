@@ -78,8 +78,8 @@ export async function listQuestions(viewer: Viewer | null, category: Category | 
 export async function getQuestion(viewer: Viewer | null, id: number): Promise<QuestionDetail | null> {
   if (!supabaseAdmin) return null;
 
-  // 성별·성명·이메일은 선장이 볼 때만 DB에서 가져온다.
-  const adminColumns = viewer?.isAdmin ? ", gender, users(nickname, email, name)" : ", users(nickname)";
+  // 성별·성명·생년월일·이메일은 선장이 볼 때만 DB에서 가져온다.
+  const adminColumns = viewer?.isAdmin ? ", gender, users(nickname, email, name, birth_date)" : ", users(nickname)";
   const { data, error } = await supabaseAdmin
     .from("questions")
     .select(
@@ -99,7 +99,7 @@ export async function getQuestion(viewer: Viewer | null, id: number): Promise<Qu
         view_count: number;
         created_at: string;
         gender?: Gender;
-        users: { nickname: string; email?: string; name?: string | null } | null;
+        users: { nickname: string; email?: string; name?: string | null; birth_date?: string | null } | null;
         answers: Answer | Answer[] | null;
       })
     | null;
@@ -122,7 +122,7 @@ export async function getQuestion(viewer: Viewer | null, id: number): Promise<Qu
     answer,
     adminOnly:
       viewer?.isAdmin && row.gender && row.users?.email
-        ? { gender: row.gender, email: row.users.email, name: row.users.name ?? null }
+        ? { gender: row.gender, email: row.users.email, name: row.users.name ?? null, birthDate: row.users.birth_date ?? null }
         : null,
   };
 }

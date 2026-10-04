@@ -63,7 +63,7 @@ export interface QuestionDetail {
   is_mine: boolean;
   answer: { body: string; created_at: string; updated_at: string } | null;
   /** 선장(관리자)이 볼 때만 채워진다. 다른 사람에게는 서버가 아예 내려보내지 않는다. */
-  adminOnly: { gender: Gender; email: string; name: string | null } | null;
+  adminOnly: { gender: Gender; email: string; name: string | null; birthDate: string | null } | null;
 }
 
 export function formatDate(iso: string) {
