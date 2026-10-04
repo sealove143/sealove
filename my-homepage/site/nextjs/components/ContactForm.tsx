@@ -77,6 +77,9 @@ export default function ContactForm() {
           value={cReply}
           onChange={(e) => setCReply(e.target.value)}
         />
+        <p className="board-note" style={{ margin: "8px 0 0" }}>
+          답장은 적어 주신 이메일로 보내 드립니다. 주소를 정확히 적어 주세요.
+        </p>
       </div>
       {/* 봇 차단용 숨김 필드 — 사람에게는 보이지 않는다. */}
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", width: 1, height: 1, overflow: "hidden" }}>
