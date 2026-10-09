@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import ChannelRail from "@/components/ChannelRail";
+import Channels from "@/components/Channels";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
@@ -41,6 +43,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Header />
         <main>{children}</main>
+        <Channels />
+        <ChannelRail />
         <Footer />
       </body>
     </html>

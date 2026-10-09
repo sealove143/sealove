@@ -16,7 +16,7 @@ const BOOKS = [
     body: "이등항해사 시절, 바다 위에서 보낸 스물일곱의 하루하루를 담은 항해 에세이입니다. 당직과 항해 실무, 여성 항해사로서 마주한 순간들을 담담한 문장으로 기록했습니다.",
     link: {
       href: "https://search.shopping.naver.com/book/catalog/32441199358",
-      label: "네이버 도서 ↗",
+      label: "네이버 도서에서 보기 ↗",
     },
   },
   {
@@ -26,7 +26,7 @@ const BOOKS = [
     body: "세상의 중심에 서는 다섯 가지 힘을 이야기하는 자기계발서입니다. 바다 위에서 얻은 경험을 바탕으로 누구나 자신의 자리에서 중심을 잡는 법을 이야기하며, 큰글자도서판으로도 출간되었습니다.",
     link: {
       href: "https://product.kyobobook.co.kr/detail/S000200818232",
-      label: "교보문고 ↗",
+      label: "교보문고에서 보기 ↗",
     },
   },
   {
@@ -36,7 +36,7 @@ const BOOKS = [
     body: "해양산업의 미래를 꿈꾸는 청소년을 위한 진로 지침서입니다. 해운·무역 현장의 실무를 항해사의 시선으로 안내하며, 청소년 진로 도서 시리즈 '미래탐색'의 한 권으로 출간되었습니다.",
     link: {
       href: "https://search.shopping.naver.com/book/catalog/55396542990",
-      label: "네이버 도서 ↗",
+      label: "네이버 도서에서 보기 ↗",
     },
   },
 ];
@@ -155,48 +155,6 @@ export default function BooksPage() {
                 <span className="media-link">다시보기 ↗</span>
               </a>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="channels" className="section">
-        <div className="container">
-          <div className="section-head">
-            <div className="eyebrow">CHANNELS</div>
-            <h2 className="section-title">채널에서 더 만나기</h2>
-            <p className="section-sub">승선 중의 일상과 항해 기록을 조금 더 가까이에서 나눕니다.</p>
-          </div>
-          <div className="social-grid">
-            <a className="social-card" href="https://www.youtube.com/channel/UCIrObaBJ-x-XQ406oOEx8ug" target="_blank" rel="noopener">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <rect x="2" y="5" width="20" height="14" rx="3" />
-                <path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor" stroke="none" />
-              </svg>
-              <span>
-                <b>유튜브</b>
-                <small>꿈꾸는 항해사 채널 바로가기</small>
-              </span>
-            </a>
-            <a className="social-card" href="https://www.instagram.com/sealove_ksj" target="_blank" rel="noopener">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
-              </svg>
-              <span>
-                <b>인스타그램</b>
-                <small>@sealove_ksj</small>
-              </span>
-            </a>
-            <a className="social-card" href="https://blog.naver.com/powertmdwn" target="_blank" rel="noopener">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-                <path d="M4 19h16M4 15l5-5 3 3 6-6" />
-              </svg>
-              <span>
-                <b>블로그</b>
-                <small>항해 기록 &amp; 진로 이야기</small>
-              </span>
-            </a>
           </div>
         </div>
       </section>

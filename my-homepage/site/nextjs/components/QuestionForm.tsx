@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 
 import { createQuestion, type ActionState } from "@/app/mentor/actions";
+import SelectBox from "@/components/SelectBox";
 import { BODY_MAX, BODY_MIN, CATEGORIES, GENDERS, TITLE_MAX, type Gender } from "@/lib/consult";
 
 interface Props {
@@ -85,13 +86,13 @@ export default function QuestionForm({ nickname, email, defaultGender }: Props) 
       </div>
       <div style={{ marginBottom: 14 }}>
         <label htmlFor="qCategory">분류</label>
-        <select id="qCategory" name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
-          {Object.entries(CATEGORIES).map(([key, label]) => (
-            <option key={key} value={key}>
-              {label}
-            </option>
-          ))}
-        </select>
+        <SelectBox
+          id="qCategory"
+          name="category"
+          value={category}
+          options={Object.entries(CATEGORIES).map(([value, label]) => ({ value, label }))}
+          onChange={setCategory}
+        />
       </div>
       <div style={{ marginBottom: 6 }}>
         <label htmlFor="qBody">내용</label>

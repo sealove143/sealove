@@ -2,6 +2,11 @@
 
 import { useState, type FormEvent } from "react";
 
+import DateField from "@/components/DateField";
+import SelectBox from "@/components/SelectBox";
+
+const TYPES = ["강연", "방송 출연", "인터뷰", "기타"].map((type) => ({ value: type, label: type }));
+
 type Status = { kind: "idle" } | { kind: "sending" } | { kind: "sent" } | { kind: "error"; message: string };
 
 export default function ContactForm() {
@@ -43,16 +48,11 @@ export default function ContactForm() {
       <div className="field-row">
         <div>
           <label htmlFor="cType">문의 종류</label>
-          <select id="cType" value={cType} onChange={(e) => setCType(e.target.value)}>
-            <option>강연</option>
-            <option>방송 출연</option>
-            <option>인터뷰</option>
-            <option>기타</option>
-          </select>
+          <SelectBox id="cType" value={cType} options={TYPES} onChange={setCType} />
         </div>
         <div>
           <label htmlFor="cDate">희망 날짜</label>
-          <input type="date" id="cDate" value={cDate} onChange={(e) => setCDate(e.target.value)} />
+          <DateField id="cDate" title="희망 날짜" value={cDate} onChange={setCDate} />
         </div>
       </div>
       <div style={{ marginBottom: 14 }}>

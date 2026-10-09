@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import AuthForm from "@/components/AuthForm";
 import BoardViewerBar from "@/components/BoardViewerBar";
+import FaqList from "@/components/FaqList";
 import QuestionForm from "@/components/QuestionForm";
 import { getViewer } from "@/lib/auth/session";
 import { CATEGORIES, formatDate, isCategory, PAGE_SIZE } from "@/lib/consult";
@@ -13,6 +14,46 @@ export const metadata: Metadata = {
   title: "항해 상담실",
   description: "항해사·해양대 진로 고민을 남기면 김승주 선장이 직접 답하는 질문 게시판, 그리고 자주 묻는 질문",
 };
+
+const FAQ = [
+  {
+    question: "어떻게 항해사가 되셨나요?",
+    answer:
+      "한국해양대학교 해사수송과학부를 졸업하고 2016년 2월 삼등항해사로 첫 승선했습니다. 오빠가 같은 학교에 다니고 있었던 것이 진로에 자연스러운 영향을 주었습니다.",
+  },
+  {
+    question: "여성 항해사로 일하며 흔치 않았던 점은 무엇인가요?",
+    answer:
+      "승선 당시 회사 소속 항해사 500명 중 여성은 단 3명뿐이었습니다. 흔치 않은 환경이었지만 삼등항해사부터 선장까지 모든 계급을 차례로 거쳤습니다.",
+  },
+  {
+    question: "선장이 되기까지 얼마나 걸렸나요?",
+    answer: (
+      <>
+        2016년 삼등항해사로 시작해 2025년 4월 선장이 되기까지 10년이 걸렸습니다. 계급별 승선 기록은{" "}
+        <Link href="/about#log" style={{ color: "var(--sea-bright)" }}>
+          항해 일지
+        </Link>
+        에서 볼 수 있습니다.
+      </>
+    ),
+  },
+  {
+    question: "책은 어떤 순서로 읽으면 좋을까요?",
+    answer:
+      "출간 순서대로 『나는 스물일곱, 2등 항해사입니다』 → 『오진다 오력』 → 『해운 무역의 리더 항해사』 순으로 읽으면 커리어의 흐름을 따라갈 수 있습니다.",
+  },
+  {
+    question: "답변은 언제쯤 달리나요?",
+    answer:
+      "6개월 승선 / 1개월 휴가 주기로 근무하고 있어, 승선 중에는 답변이 늦어질 수 있습니다. 휴가 기간에 모아서 답변하는 경우가 많습니다. 답변은 게시판에 달리고, 가입하신 이메일로 답장을 보내 드리기도 합니다.",
+  },
+  {
+    question: "비공개 질문은 누가 볼 수 있나요?",
+    answer:
+      "비공개 질문은 작성한 본인과 김승주 선장만 볼 수 있습니다. 목록에는 ‘비공개 질문입니다’라는 자리만 표시되고 제목과 내용은 가려집니다.",
+  },
+];
 
 function listHref(category: string | null, page: number) {
   const params = new URLSearchParams();
@@ -133,54 +174,7 @@ export default async function MentorPage({ searchParams }: PageProps<"/mentor">)
             <div className="eyebrow">FAQ</div>
             <h2 className="section-title">자주 묻는 질문</h2>
           </div>
-          <div className="faq-list">
-            <details className="faq-item">
-              <summary>어떻게 항해사가 되셨나요?</summary>
-              <p>
-                한국해양대학교 해사수송과학부를 졸업하고 2016년 2월 삼등항해사로 첫 승선했습니다. 오빠가 같은
-                학교에 다니고 있었던 것이 진로에 자연스러운 영향을 주었습니다.
-              </p>
-            </details>
-            <details className="faq-item">
-              <summary>여성 항해사로 일하며 흔치 않았던 점은 무엇인가요?</summary>
-              <p>
-                승선 당시 회사 소속 항해사 500명 중 여성은 단 3명뿐이었습니다. 흔치 않은 환경이었지만
-                삼등항해사부터 선장까지 모든 계급을 차례로 거쳤습니다.
-              </p>
-            </details>
-            <details className="faq-item">
-              <summary>선장이 되기까지 얼마나 걸렸나요?</summary>
-              <p>
-                2016년 삼등항해사로 시작해 2025년 4월 선장이 되기까지 10년이 걸렸습니다. 계급별 승선 기록은{" "}
-                <Link href="/about#log" style={{ color: "var(--sea-bright)" }}>
-                  항해 일지
-                </Link>
-                에서 볼 수 있습니다.
-              </p>
-            </details>
-            <details className="faq-item">
-              <summary>책은 어떤 순서로 읽으면 좋을까요?</summary>
-              <p>
-                출간 순서대로 『나는 스물일곱, 2등 항해사입니다』 → 『오진다 오력』 → 『해운 무역의 리더
-                항해사』 순으로 읽으면 커리어의 흐름을 따라갈 수 있습니다.
-              </p>
-            </details>
-            <details className="faq-item">
-              <summary>답변은 언제쯤 달리나요?</summary>
-              <p>
-                6개월 승선 / 1개월 휴가 주기로 근무하고 있어, 승선 중에는 답변이 늦어질 수 있습니다. 휴가
-                기간에 모아서 답변하는 경우가 많습니다. 답변은 게시판에 달리고, 가입하신 이메일로 답장을 보내
-                드리기도 합니다.
-              </p>
-            </details>
-            <details className="faq-item">
-              <summary>비공개 질문은 누가 볼 수 있나요?</summary>
-              <p>
-                비공개 질문은 작성한 본인과 김승주 선장만 볼 수 있습니다. 목록에는 &lsquo;비공개
-                질문입니다&rsquo;라는 자리만 표시되고 제목과 내용은 가려집니다.
-              </p>
-            </details>
-          </div>
+          <FaqList items={FAQ} />
         </div>
       </section>
     </>

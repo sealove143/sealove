@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 
 import { signIn, signUp, type AuthState } from "@/app/mentor/authActions";
+import DateField from "@/components/DateField";
 import { GENDERS, NAME_MAX, NAME_MIN, PASSWORD_MAX, PASSWORD_MIN } from "@/lib/consult";
 
 type Mode = "signin" | "signup";
@@ -22,7 +23,7 @@ export default function AuthForm() {
   const pending = signInPending || signUpPending;
 
   return (
-    <form className="board-form auth-form" action={isSignUp ? signUpAction : signInAction}>
+    <form className={`board-form auth-form${isSignUp ? "" : " is-signin"}`} action={isSignUp ? signUpAction : signInAction}>
       <p className="board-note">
         질문을 남기려면 먼저 로그인해 주세요. 처음이라면 회원가입에서 성명·생년월일·성별·이메일·비밀번호를
         적으면 바로 가입됩니다.
@@ -53,16 +54,7 @@ export default function AuthForm() {
           </div>
           <div>
             <label htmlFor="authBirthDate">생년월일</label>
-            <input
-              type="date"
-              id="authBirthDate"
-              name="birthDate"
-              required
-              min="1900-01-01"
-              autoComplete="bday"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-            />
+            <DateField id="authBirthDate" name="birthDate" required variant="birth" title="생년월일" value={birthDate} onChange={setBirthDate} placeholder="생년월일 선택" />
           </div>
         </div>
       )}
@@ -86,7 +78,7 @@ export default function AuthForm() {
           </fieldset>
         </div>
       )}
-      <div style={{ marginBottom: 14 }}>
+      <div className="auth-field" style={{ marginBottom: 14 }}>
         <label htmlFor="authEmail">이메일</label>
         <input
           type="email"
@@ -100,7 +92,7 @@ export default function AuthForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
       </div>
-      <div className="field-row">
+      <div className="field-row auth-field">
         <div>
           <label htmlFor="authPassword">비밀번호</label>
           <input
